@@ -12,58 +12,191 @@
         <h2>по дисциплине «Основы компьютерных сетей»</h2>
     </header>
 
-    <main>
+    <main class="container">
+        <!-- 1. Титульная часть -->
         <section id="title-page">
             <h3>Титульная часть</h3>
-            <p><strong>Учебное заведение:</strong> [Название вашего ВУЗа]</p>
-            <p><strong>Работа:</strong> Контрольная точка №1 / Лабораторная работа №1</p>
-            <p><strong>Тема:</strong> Настройка базовой сетевой топологии</p>
-            <p><strong>Выполнил:</strong> Иванов Иван Иванович</p>
-            <p><strong>Группа:</strong> [Ваша группа]</p>
-            <p><strong>Год:</strong> 2025</p>
+            <ul>
+                <li><strong>Учебное заведение:</strong> IThub колледж</li>
+                <li><strong>Работа:</strong> КТ №1 / ЛР №1</li>
+                <li><strong>Тема:</strong> Настройка базовой сетевой топологии</li>
+                <li><strong>Студент:</strong> Гаврилов Иван Сергеевич</li>
+                <li><strong>Группа:</strong> 1ЭИТ1</li>
+                <li><strong>Год:</strong> 2025</li>
+            </ul>
         </section>
 
+        <!-- 2. Создание репозитория и настройка SSH -->
+        <section id="repo-ssh">
+            <h3>1. Создание репозитория и настройка SSH</h3>
+            <h4>1.1. Генерация SSH-ключей</h4>
+            <p>Открываем терминал Git Bash  и выполним команду:</p>
+            <pre><code>ssh-keygen -t ed25519 -C "yasha1311@gmail.com""</code></pre>
+            <figure>
+                <img src="/images/1.png" alt="Топология сети">
+            </figure>
+            <h4>1.2. Добавление SSH-ключа на GitHub</h4>
+            <ol>
+                <li>Скопируем публичный ключ: <code>cat ~/.ssh/id_ed25519.pub</code>.</li>
+                <figure>
+                <img src="/images/2.png" alt="Топология сети">
+            </figure>
+                <li>Перейдем на GitHub → Settings → SSH and GPG keys → New SSH key. Вставим содержимое ключа и укажем название</li>
+                <figure>
+                <img src="/images/3.png" alt="Топология сети">
+            </figure>
+                <figure>
+                <img src="/images/4.png" alt="Топология сети">
+            </figure>
+            </ol>
+            <h4>1.3. Создание и клонирование репозитория</h4>
+            <ol>
+                <li>На GitHub нажимаем New Repository, задайте имя (например, <code>oks-project-gavrilov</code>), укажем публичный доступ.</li>
+                <li>В репозитории размещен один файл README.md</li>
+                <figure>
+                <img src="/images/6.png" alt="Топология сети">
+            </figure>
+                <li>Получаем SSH URL: <code>git@github.com:snailhinho911/oks-project-gavrilov.git</code>.</li>
+                <figure>
+                <img src="/images/6.png" alt="Топология сети">
+            </figure>
+                <li>В терминале Git Bash:</li>
+            </ol>
+            <pre><code>
+
+git clone git@github.com:snailhinho911/oks-project-gavrilov.git
+</code></pre>
+            <figure>
+                <img src="/images/7.png" alt="Топология сети">
+            </figure>
+            <p>Таким образом репозиторий готов для загрузки отчёта и других файлов.</p>
+        </section>
+
+        <!-- 3. Схема топологии -->
         <section id="topology">
-            <h3>1. Изображение топологии</h3>
-            <p>Ниже представлена собранная в Cisco Packet Tracer топология сети.</p>
-            <img src="path/to/your/topology_screenshot.png" alt="Схема топологии сети">
-            <p class="comment">Комментарий для бабушки: Это наша карта сети. Круглое устройство — роутер (главный), прямоугольное — коммутатор (распределитель), а компьютеры — это конечные пользователи.</p>
+            <h3>2. Схема топологии</h3>
+            <p>Ниже приведена схема сети, собранная в Cisco Packet Tracer.</p>
+            <figure>
+                <img src="/images/8.png" alt="Топология сети">
+
+            </figure>
+            <p>Описание топологии: Один маршрутизатор подключён к коммутатору, к которому в свою очередь подключены два конечных устройства (ПК). IP-сеть определяется третьим октетом (номер по списку: 9).</p>
         </section>
 
-        <section id="configuration">
-            <h3>2. Ключевые этапы настройки</h3>
-            
-            <h4>2.1. Настройка имени роутера</h4>
-            <p>Первым делом, мы дали роутеру уникальное имя — мою фамилию. Это важно для идентификации устройства в сети.</p>
-            <img src="path/to/your/hostname_screenshot.png" alt="Скриншот настройки имени роутера">
-            <p class="comment">Комментарий для бабушки: Мы как бы повесили табличку с фамилией на дверь главного устройства, чтобы не перепутать его с другими.</p>
+        <!-- 4. Настройка маршрутизатора -->
+        <section id="router-config">
+            <h3>3. Настройка маршрутизатора</h3>
+            <h4>3.1. Изменение имени (hostname)</h4>
+            <p>В CLI роутера через последовательность команд задали имя:</p>
+            <pre><code>enable
+configure terminal
+hostname Gavrilov</code></pre>
+            <figure>
+                <img src="/images/9.png" alt="Настройка hostname">
 
-            <h4>2.2. Настройка IP-адреса на роутере</h4>
-            <p>Мы назначили роутеру статический IP-адрес 192.168.25.1. Третий октет (25) — мой номер по списку. Этот адрес будет служить шлюзом для всей нашей локальной сети.</p>
-            <img src="path/to/your/router_ip_config_screenshot.png" alt="Скриншот настройки IP-адреса">
-            <p class="comment">Комментарий для бабушки: Мы присвоили главному устройству уникальный номер дома (IP-адрес), чтобы другие устройства знали, куда отправлять письма (данные) за пределы их улицы (локальной сети).</p>
-            
-            <h4>2.3. Настройка IP-адресов на ПК</h4>
-            <p>Каждому компьютеру был присвоен свой уникальный адрес в той же сети (192.168.25.10 и 192.168.25.11) и указан адрес шлюза.</p>
-            <img src="path/to/your/pc_ip_config_screenshot.png" alt="Скриншот настройки IP на ПК">
-            <p class="comment">Комментарий для бабушки: Каждому компьютеру мы дали свой номер квартиры, чтобы они могли общаться между собой и знали, через какую дверь (шлюз) выходить на улицу.</p>
+            </figure>
+
+            <figure>
+                <img src="/images/10.png" alt="Настройка hostname">
+
+            </figure>
+            <p>Имя позволяет однозначно идентифицировать устройство в сети.</p>
+
+            <h4>3.2. Настройка интерфейса</h4>
+            <p>Интерфейс, подключённый к коммутатору, конфигурируется так:</p>
+            <pre>
+  interface GigabitEthernet0/0/0
+  ip address 192.168.9.1 255.255.255.0
+  no shutdown
+  exit
+</pre>
+            <figure>
+                <img src="/images/11.png" alt="Настройка интерфейса">
+
+            </figure>
+
+            <figure>
+                <img src="/images/12.png" alt="Настройка интерфейса">
+
+            </figure>
+
+            <figure>
+                <img src="/images/13.png" alt="Настройка интерфейса">
+
+            </figure>
+
+
+            <h4>3.3. Сохранение конфигурации</h4>
+            <p>Команда:</p>
+            <pre><code>copy running-config startup-config</code></pre>
+
+            <figure>
+                <img src="/images/14.png" alt="Настройка интерфейса">
+
+            </figure>
+            <p>Сохраняет текущие настройки в энергонезависимую память.</p>
         </section>
 
+        <!-- 5. Настройка конечных устройств -->
+        <section id="pc-config">
+            <h3>4. Настройка конечных устройств</h3>
+            <p>В Packet Tracer через Desktop → IP Configuration для каждого ПК задали:</p>
+            <ul>
+                <li><strong>ПК0:</strong> IP 192.168.9.10, Маска 255.255.255.0, Шлюз 192.168.9.1</li>
+                <li><strong>ПК1:</strong> IP 192.168.9.11, Маска 255.255.255.0, Шлюз 192.168.9.1</li>
+            </ul>
+            <figure>
+                <img src="/images/15.png" alt="Настройка IP на ПК">
+
+            </figure>
+            <figure>
+                <img src="/images/16.png" alt="Настройка IP на ПК">
+
+            </figure>
+        </section>
+
+        <!-- 6. Проверка связи -->
         <section id="verification">
-            <h3>3. Демонстрация работоспособности</h3>
-            <p>Для проверки связи был использован инструмент `ping`. Скриншот ниже показывает успешную отправку пакетов от ПК0 к ПК1, что подтверждает корректность настроек.</p>
-            <img src="path/to/your/ping_success_screenshot.png" alt="Успешный пинг">
-            <p class="comment">Комментарий для бабушки: Мы отправили "письмо-проверку" с одного компьютера на другой. Ответ "Reply" означает, что письмо дошло, и связь установлена!</p>
+            <h3>5. Проверка работоспособности</h3>
+            <p>С помощью команды <code>ping</code> проверили связь:</p>
+            <pre><code># На ПК0:
+ping 192.168.9.1
+ping 192.168.9.11</code></pre>
+            <figure>
+                <img src="/images/17.png" alt="Успешный пинг">
+
+            </figure>
+            <p>Наличие ответов подтверждает корректность сетевой конфигурации.</p>
         </section>
 
+        <!-- 7. Экспорт файлов -->
+        <section id="export">
+            <h3>6. Экспорт файлов</h3>
+            <ul>
+                <li><strong>Файл топологии:</strong> сохранён в Packet Tracer → File → Save As… → <code>KT_1ИТД_GavrilovII.pkt</code>, лежит в <code>report/pkt/</code>.</li>
+                <li><strong>Конфигурация роутера:</strong> в CLI <code>show running-config</code>, копирование от <em>Building configuration...</em> до <code>end</code> в текстовый файл <code>Gavrilov_router_config.txt</code> в <code>report/configs/</code>.</li>
+            </ul>
+        </section>
+
+
+
+        <!-- 9. Выводы -->
         <section id="conclusions">
-            <h3>4. Выводы</h3>
-            <p>В ходе выполнения данной работы я научился создавать базовую сетевую топологию в симуляторе Cisco Packet Tracer, настраивать сетевые устройства (маршрутизатор и ПК) через интерфейс командной строки и графический интерфейс. Были освоены принципы назначения IP-адресации в локальной сети, включая настройку шлюза по умолчанию. Также я настроил репозиторий на GitHub, сгенерировал SSH-ключи для безопасного доступа и разместил отчет и файлы проекта в репозитории. Проект позволил закрепить теоретические знания по основам компьютерных сетей на практике.</p>
+            <h3>7. Выводы</h3>
+            <p>В ходе работы была собрана и настроена базовая топология: маршрутизатор и два ПК через коммутатор. Отработаны навыки настройки hostname, интерфейсов, статической IP-адресации и проверки связи командой ping. Настроен репозиторий на GitHub с использованием SSH-ключей, подготовлен отчёт в виде веб-страницы с HTML/CSS. Все файлы сохранены и закоммичены, что позволяет отслеживать историю изменений.</p>
+        </section>
+
+        <!-- 10. Ссылки -->
+        <section id="links">
+            <h3>8. Ссылки</h3>
+            <p>GitHub репозиторий: <a href="https://github.com/YourUsername/oks-project-gavrilov" target="_blank">github.com/YourUsername/oks-project-gavrilov</a></p>
         </section>
     </main>
 
     <footer>
-        <p>Ссылка на GitHub репозиторий: <a href="https://github.com/YourUsername/oks-project-ivanov">https://github.com/YourUsername/oks-project-ivanov</a></p>
+        <div class="container">
+            <p>&copy; 2025 Гаврилов Иван Сергеевич</p>
+        </div>
     </footer>
 </body>
 </html>
